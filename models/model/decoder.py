@@ -24,13 +24,9 @@ class TransformerDecoder(nn.Module):
         )
 
     def forward(
-        self,
-        tgt: Tensor,
-        memory: Tensor,
-        tgt_mask: Tensor,
-        memory_mask: Tensor,
+        self, tgt: Tensor, src: Tensor, tgt_mask: Tensor, src_mask: Tensor
     ) -> Tensor:
         out = self.emb(tgt)
         for layer in self.layers:
-            out = layer(out, memory, tgt_mask, memory_mask)
+            out = layer(out, src, tgt_mask, src_mask)
         return out
