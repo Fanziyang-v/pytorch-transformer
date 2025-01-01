@@ -5,6 +5,8 @@ from .attention import MultiHeadAttention
 
 
 class EncoderLayer(nn.Module):
+    """Encoder layer."""
+
     def __init__(
         self, d_model: int, d_hidden: int, n_heads: int, drop_prob: float = 0.1
     ):
