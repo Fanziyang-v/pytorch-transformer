@@ -4,7 +4,7 @@ from torch import nn, Tensor
 class MultiHeadAttention(nn.Module):
     """Multi-Head Attention."""
 
-    def __init__(self, d_model: int, n_heads: int, drop_prob: float = 0.1) -> None:
+    def __init__(self, d_model: int, n_heads: int) -> None:
         super(MultiHeadAttention, self).__init__()
         self.n_heads = n_heads
         self.proj_q = nn.Linear(d_model, d_model)
@@ -12,7 +12,6 @@ class MultiHeadAttention(nn.Module):
         self.proj_v = nn.Linear(d_model, d_model)
         self.proj_o = nn.Linear(d_model, d_model)
         self.attention = ScaledDotProductAttention()
-        self.dropout = nn.Dropout(drop_prob)
 
     def forward(
         self, q: Tensor, k: Tensor, v: Tensor, mask: Tensor | None = None
