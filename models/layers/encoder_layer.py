@@ -20,10 +20,10 @@ class EncoderLayer(nn.Module):
         self.norm2 = nn.LayerNorm(d_model)
         self.dropout2 = nn.Dropout(drop_prob)
 
-    def forward(self, x: Tensor, mask: Tensor) -> Tensor:
+    def forward(self, x: Tensor, src_mask: Tensor) -> Tensor:
         # 1. self-attention
         shortcut = x
-        out = self.attn(x, x, x, mask)
+        out = self.attn(x, x, x, src_mask)
         out = self.norm1(shortcut + self.dropout1(out))
 
         # 2. feed-forward network

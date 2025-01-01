@@ -24,16 +24,16 @@ class DecoderLayer(nn.Module):
         self.dropout3 = nn.Dropout(drop_prob)
 
     def forward(
-        self, x: Tensor, memory: Tensor, target_mask: Tensor, memory_mask: Tensor
+        self, tgt: Tensor, src: Tensor, tgt_mask: Tensor, src_mask: Tensor
     ) -> Tensor:
         # 1. self-attention
-        shortcut = x
-        out = self.attn(x, x, x, target_mask)
+        shortcut = tgt
+        out = self.attn(tgt, tgt, tgt, tgt_mask)
         out = self.norm1(shortcut + self.dropout1(out))
 
         # 2. encoder-decoder attention
         shortcut = out
-        out = self.cross_attn(out, memory, memory, memory_mask)
+        out = self.cross_attn(out, src, src, src_mask)
         out = self.norm2(shortcut + self.dropout2(out))
 
         # 3. feed-forward network
