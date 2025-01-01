@@ -1,5 +1,5 @@
 from torch import nn, Tensor
-
+from functools import partial
 
 class MultiHeadAttention(nn.Module):
     """Multi-Head Attention."""
@@ -20,7 +20,7 @@ class MultiHeadAttention(nn.Module):
         # 1. linear transformation
         q, k, v = self.proj_q(q), self.proj_k(k), self.proj_v(v)
         # 2. split tensor by the number of heads
-        q, k, v = map(_split, (q, k, v))
+        q, k, v = map(partial(_split, n_heads=self.n_heads), (q, k, v))
         # 3. scaled dot-product attention
         out = self.attention(q, k, v, mask)
         # 4. concatenate heads
