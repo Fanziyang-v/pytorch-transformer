@@ -64,6 +64,6 @@ def _split(tensor: Tensor, n_heads: int) -> Tensor:
 
 def _concat(tensor: Tensor) -> Tensor:
     """Concatenate tensor after splitting."""
-    batch_size, seq_len, n_heads, d_head = tensor.size()
+    batch_size, n_heads, seq_len, d_head = tensor.size()
     d_model = n_heads * d_head
     return tensor.transpose(1, 2).contiguous().view(batch_size, seq_len, d_model)
